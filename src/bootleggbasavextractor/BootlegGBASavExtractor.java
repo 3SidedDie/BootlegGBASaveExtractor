@@ -17,12 +17,12 @@ public class BootlegGBASavExtractor {
     
     
     public static Screen scr;
-    
     public static Thread thr0;
     
     public static void main(String[] args) {
         // TODO code application logic here
-        JOptionPane.showConfirmDialog((Component) null, "Program by: 3SidedDie\n\nSpecial thanks to:\n''watermagician1996'' on Reddit\n''Im a blisy'' on Youtube.","CREDITS", JOptionPane.DEFAULT_OPTION);
+        String genVersion = "0.0.7";
+        JOptionPane.showConfirmDialog((Component) null, "Program by: 3SidedDie\n\nSpecial thanks to:\n''watermagician1996'' on Reddit\n''Im a blisy'' on Youtube.\n\nVersion: "+genVersion,"CREDITS", JOptionPane.DEFAULT_OPTION);
         
         scr = new Screen();
         thr0 = new Thread(scr);

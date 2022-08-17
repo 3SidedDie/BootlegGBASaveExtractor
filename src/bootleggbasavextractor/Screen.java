@@ -2,6 +2,8 @@
 package bootleggbasavextractor;
 
 import java.awt.Component;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -26,6 +29,7 @@ public class Screen extends javax.swing.JFrame implements Runnable{
     public Screen() {
         initComponents();
         setLocationRelativeTo(null);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("Images/icon.png")));
     }
        
    
@@ -52,9 +56,11 @@ String asd;
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(320, 800));
-        setMinimumSize(new java.awt.Dimension(320, 215));
-        setPreferredSize(new java.awt.Dimension(320, 215));
+        setTitle(".sav Extractor for Bootleg GBA cart ROMs");
+        setMaximumSize(new java.awt.Dimension(310, 800));
+        setMinimumSize(new java.awt.Dimension(310, 215));
+        setPreferredSize(new java.awt.Dimension(310, 215));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         loadButton.setText("Load ROM");
@@ -100,7 +106,7 @@ String asd;
         getContentPane().add(jScrollPane2);
         jScrollPane2.setBounds(10, 220, 280, 230);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bootleggbasavextractor/BG01.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bootleggbasavextractor/Images/BG01.png"))); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, 0, 300, 140);
 
@@ -108,7 +114,7 @@ String asd;
     }// </editor-fold>//GEN-END:initComponents
 
     private void logButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logButtonActionPerformed
-        
+        JOptionPane.showConfirmDialog((Component) null, "this button doesnt do shit man","WHAT???", JOptionPane.DEFAULT_OPTION);
     }//GEN-LAST:event_logButtonActionPerformed
 
     private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
@@ -118,7 +124,7 @@ String asd;
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             int x=0;
             String gamename="";
-            novaMensagem("Detecting ROM");
+            newMessage("Detecting ROM");
             try{
                         File filePatch = fc.getSelectedFile();
                         FileInputStream rom = new FileInputStream(filePatch);
@@ -137,21 +143,21 @@ String asd;
                 }catch (Exception ex) {
                             VerificaROM(gamename);
             }
-            novaMensagem("Finished! Game is "+salename);
+            newMessage("Finished! Game is "+salename);
             saveButton.setEnabled(true);//activate the save button after loading
         }
         
     }//GEN-LAST:event_loadButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        JOptionPane.showConfirmDialog((Component) null, "IGNORING THIS MESSAGE CAN RESULT IN A SAVE FILE BEING DELETED,CORRUPT OR OVERWRITTEN!\nBEFORE EXTRACTING, MAKE SURE THERE'S NO OTHER SAVE FILE IN THE SAME FOLDER AS THE ROM.","WARNING!", JOptionPane.DEFAULT_OPTION);
         int retunVal = JOptionPane.showConfirmDialog((Component) null, "Extraction can take about 5 minutes cuz im dumb and i'll be doing it the dumb way. Proceed?","warning", JOptionPane.OK_CANCEL_OPTION);
         
         if(retunVal==0){
-                novaMensagem("Reading ROM");
-                novaMensagem("This process can take about 5 minutes");
+                newMessage("Reading ROM");
+                newMessage("This process can take about 5 minutes");
                     try{
                         JOptionPane.showConfirmDialog((Component) null, "Extraction has started. The programm will seem like its freezed, just wait a bit.","Extraction has started", JOptionPane.DEFAULT_OPTION);
-                        
                         
                         FileInputStream rom = new FileInputStream(asd);
                                 FileOutputStream save = new FileOutputStream(asd+".sav");
@@ -164,20 +170,14 @@ String asd;
                                     if (x>savfn){
                                     rom.close();
                                     }
-
                                 }
 
-
-
                     }catch (Exception ex) {
-                    novaMensagem("\nFinished!\nYour "+salename+" Save file is in the\nsame folder as your ROM");
+                    newMessage("\nFinished!\nYour "+salename+" Save file is in the\nsame folder as your ROM");
                     JOptionPane.showConfirmDialog((Component) null, "EXTRACTION FINISHED! Your save data is in the same folder as your rom.","FINISHED!", JOptionPane.DEFAULT_OPTION);
-
-                }
-            //} 
-            
+                    }
         }else{
-            novaMensagem("User cancelled extraction");
+            newMessage("User cancelled extraction");
         }
 
 
@@ -230,11 +230,9 @@ String asd;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 
-    public void novaMensagem(String tifu){
-    jTextArea1.setText(jTextArea1.getText()+tifu+"\n");
-    
+    public void newMessage(String theMessage){
+    jTextArea1.setText(jTextArea1.getText()+theMessage+"\n");
 }
-
         public void VerificaROM(String romname){
         //StringSelection selection = new StringSelection(romname);
         //Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -251,8 +249,6 @@ String asd;
             savst=16515072;savfn=16580607;salename="Untested/nExtraction might not work!";
         }
     }
-    
-    
     
     @Override
     public void run() {
